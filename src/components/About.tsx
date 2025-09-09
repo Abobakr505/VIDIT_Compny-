@@ -199,7 +199,7 @@ const About = () => {
             {/* Floating stats */}
             <div className="absolute top-8 left-8 glass-effect rounded-2xl p-4 shadow-xl">
               <div className="text-2xl font-bold gradient-text font-arabic">500+</div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-arabic">مشروع</div>
+              <div className="text-sm text-white dark:text-gray-400 font-arabic">مشروع</div>
             </div>
             
             <div className="absolute bottom-8 right-8 glass-effect rounded-2xl p-4 shadow-xl">
@@ -208,7 +208,7 @@ const About = () => {
                   <Star key={i} className="w-4 h-4 text-yellow-400 fill-current" />
                 ))}
               </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400 font-arabic">تقييم العملاء</div>
+              <div className="text-sm text-white dark:text-gray-400 font-arabic">تقييم العملاء</div>
             </div>
           </motion.div>
         </div>
