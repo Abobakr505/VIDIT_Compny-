@@ -72,13 +72,19 @@ const Contact = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="text-center mb-16">
+          <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-full px-6 py-3 mb-6">
+            <Mail className="w-5 h-5 text-primary-600 dark:text-primary-400" />
+            <span className="text-sm font-medium text-primary-700 dark:text-primary-300 font-arabic">
+                تواصل معنا
+            </span>
+          </div>
           <motion.h2
             initial={{ y: 50, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: 'easeOut' }}
             className="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-6 font-arabic"
           >
-            تواصل معنا
+            تواصل <span className="gradient-text">معنا</span>
           </motion.h2>
           <motion.p
             initial={{ y: 50, opacity: 0 }}

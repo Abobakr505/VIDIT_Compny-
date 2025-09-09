@@ -6,6 +6,7 @@ import About from '../components/About';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 
+
 const Home = () => {
   return (
     <>
