@@ -1,0 +1,139 @@
+
+
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@100;200;300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+
+@font-face {
+
+    font-family: GraphicSchool-Regular;
+
+    src: url(/GraphicSchool-Regular.ttf);
+}
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  scroll-behavior: smooth;
+}
+
+body {
+font-family: "IBM Plex Sans Arabic", sans-serif;
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #1eb5b7 0%, #194b4b 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.glass-effect {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.8s ease-out;
+}
+
+.animate-on-scroll.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hover-lift {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hover-lift:hover {
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(30, 181, 183, 0.2);
+}
+
+.gradient-border {
+  background: linear-gradient(135deg, #1eb5b7, #194b4b);
+  padding: 2px;
+  border-radius: 1rem;
+}
+
+.gradient-border-content {
+  background: white;
+  border-radius: calc(1rem - 2px);
+}
+
+.dark .gradient-border-content {
+  background: #1f2937;
+}
+
+@keyframes gradient-x {
+  0%, 100% {
+    background-size: 200% 200%;
+    background-position: left center;
+  }
+  50% {
+    background-size: 200% 200%;
+    background-position: right center;
+  }
+}
+
+.animate-gradient-x {
+  animation: gradient-x 3s ease infinite;
+}
+
+.animate-spin-slow {
+  animation: spin 8s linear infinite;
+}
+
+.animate-bounce-slow {
+  animation: bounce 3s infinite;
+}
+
+.animate-pulse-slow {
+  animation: pulse 4s infinite;
+}
+
+
+.nav-link {
+  position: relative;
+  text-decoration: none;
+}
+
+.nav-link::after {
+  content: "";
+  --tw-text-opacity: 1;
+  position: absolute;
+  width: 0;
+  height: 2px;
+  bottom: -2px; /* المسافة بين النص والخط */
+  right: 0; /* يبدأ من اليمين (مع RTL) */
+  background-color: #1eb5b7; /* استبدل بلون teeverse أو لون آخر */
+  transition: width 0.3s ease-in-out; /* أنيميشن سلس للعرض */
+}
+
+.nav-link:hover::after {
+  width: 100%; /* يمتد الخط ليغطي كامل عرض النص */
+  left: 0; /* ينتهي عند اليسار */
+  right: auto; /* إلغاء right لضمان الاتجاه الصحيح */
+}
+
+.logo{
+
+  font-family: 'GraphicSchool-Regular' , sans-serif;
+
+}
+
+.bracket{
+  font-family: 'Tiny5', sans-serif;
+  font-size: 1.5rem;
+}
