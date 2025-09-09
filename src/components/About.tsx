@@ -1,85 +1,67 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import { Users, Award, Target, Heart, TrendingUp, Shield, CheckCircle, Star } from 'lucide-react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-
-gsap.registerPlugin(ScrollTrigger);
+import { motion, useInView, useAnimation } from 'framer-motion';
+import { useEffect } from 'react';
 
 const About = () => {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const contentRef = useRef<HTMLDivElement>(null);
-  const imageRef = useRef<HTMLDivElement>(null);
-  const valuesRef = useRef<HTMLDivElement>(null);
-  const statsRef = useRef<HTMLDivElement>(null);
+  const sectionRef = useRef(null);
+  const contentRef = useRef(null);
+  const imageRef = useRef(null);
+  const valuesRef = useRef(null);
+  const statsRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      // Content animation
-      gsap.from(contentRef.current, {
-        x: -100,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: contentRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse"
-        }
-      });
+  // Set up animation controls and inView hooks
+  const contentControls = useAnimation();
+  const imageControls = useAnimation();
+  const valuesControls = useAnimation();
+  const statsControls = useAnimation();
 
-      // Image animation
-      gsap.from(imageRef.current, {
-        x: 100,
-        opacity: 0,
-        duration: 1,
-        ease: "power2.out",
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: imageRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse"
-        }
-      });
+  const contentInView = useInView(contentRef, { triggerOnce: false, threshold: 0.2 });
+  const imageInView = useInView(imageRef, { triggerOnce: false, threshold: 0.2 });
+  const valuesInView = useInView(valuesRef, { triggerOnce: false, threshold: 0.2 });
+  const statsInView = useInView(statsRef, { triggerOnce: false, threshold: 0.2 });
 
-      // Values animation
-      gsap.from(valuesRef.current?.children || [], {
-        y: 80,
-        opacity: 0,
-        duration: 0.8,
-        stagger: 0.1,
-        ease: "power2.out",
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: valuesRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse"
-        }
-      });
+  // Animation variants
+  const contentVariants = {
+    hidden: { x: -100, opacity: 0 },
+    visible: { x: 0, opacity: 1, transition: { duration: 1, ease: 'easeOut' } }
+  };
 
-      // Stats counter animation
-      gsap.from(statsRef.current?.children || [], {
-        scale: 0,
-        opacity: 0,
-        duration: 0.6,
-        stagger: 0.1,
-        ease: "back.out(1.7)",
-        immediateRender: false,
-        scrollTrigger: {
-          trigger: statsRef.current,
-          start: "top 80%",
-          end: "bottom 20%",
-          toggleActions: "play none none reverse"
-        }
-      });
+  const imageVariants = {
+    hidden: { x: 100, opacity: 0 },
+    visible: { x: 0, opacity: 1, transition: { duration: 1, ease: 'easeOut' } }
+  };
 
-    }, sectionRef);
+  const valueVariants = {
+    hidden: { y: 80, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { duration: 0.8, ease: 'easeOut' } }
+  };
 
-    return () => ctx.revert();
-  }, []);
+  const statVariants = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: { scale: 1, opacity: 1, transition: { duration: 0.6, ease: 'backOut' } }
+  };
+
+  // Trigger animations based on inView status
+  useEffect(() => {
+    if (contentInView) contentControls.start('visible');
+    else contentControls.start('hidden');
+  }, [contentInView, contentControls]);
+
+  useEffect(() => {
+    if (imageInView) imageControls.start('visible');
+    else imageControls.start('hidden');
+  }, [imageInView, imageControls]);
+
+  useEffect(() => {
+    if (valuesInView) valuesControls.start('visible');
+    else valuesControls.start('hidden');
+  }, [valuesInView, valuesControls]);
+
+  useEffect(() => {
+    if (statsInView) statsControls.start('visible');
+    else statsControls.start('hidden');
+  }, [statsInView, statsControls]);
 
   const values = [
     {
@@ -137,7 +119,7 @@ const About = () => {
   ];
 
   return (
-    <section ref={sectionRef} className="pt-24  bg-white dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden">
+    <section ref={sectionRef} className="pt-24 bg-white dark:bg-gray-900 transition-colors duration-300 relative overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 opacity-5 dark:opacity-10">
         <div className="absolute top-20 left-20 w-40 h-40 bg-primary-500 rounded-full blur-3xl animate-pulse"></div>
@@ -149,7 +131,12 @@ const About = () => {
         {/* Main content section */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
           {/* Content */}
-          <div ref={contentRef}>
+          <motion.div
+            ref={contentRef}
+            variants={contentVariants}
+            initial="hidden"
+            animate={contentControls}
+          >
             <div className="inline-flex items-center space-x-2 bg-gradient-to-r from-primary-100 to-secondary-100 dark:from-primary-900/30 dark:to-secondary-900/30 rounded-full px-6 py-3 mb-6">
               <Users className="w-5 h-5 text-primary-600 dark:text-primary-400" />
               <span className="text-sm font-medium text-primary-700 dark:text-primary-300 font-arabic">من نحن</span>
@@ -157,7 +144,7 @@ const About = () => {
             
             <h2 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6 font-arabic">
               فريق من
-              <span className="block gradient-text  py-2">المبدعين</span>
+              <span className="block gradient-text py-2">المبدعين</span>
             </h2>
             
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 leading-relaxed font-arabic">
@@ -188,10 +175,16 @@ const About = () => {
                 قصة نجاحنا
               </button>
             </div>
-          </div>
+          </motion.div>
 
           {/* Enhanced Image */}
-          <div ref={imageRef} className="relative">
+          <motion.div
+            ref={imageRef}
+            variants={imageVariants}
+            initial="hidden"
+            animate={imageControls}
+            className="relative"
+          >
             <div className="aspect-square rounded-3xl overflow-hidden shadow-2xl">
               <img
                 src="/team.jpeg"
@@ -217,19 +210,28 @@ const About = () => {
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400 font-arabic">تقييم العملاء</div>
             </div>
-          </div>
+          </motion.div>
         </div>
 
         {/* Stats section */}
-        <div ref={statsRef} className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-24">
+        <motion.div
+          ref={statsRef}
+          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6 mb-24"
+        >
           {stats.map((stat, index) => (
-            <div key={index} className="text-center glass-effect rounded-2xl p-6 hover:scale-105 transition-all duration-300 shadow-lg border border-gray-200 dark:border-gray-700/50">
+            <motion.div
+              key={index}
+              variants={statVariants}
+              initial="hidden"
+              animate={statsControls}
+              className="text-center glass-effect rounded-2xl p-6 hover:scale-105 transition-all duration-300 shadow-lg border border-gray-200 dark:border-gray-700/50"
+            >
               <div className="text-3xl mb-3">{stat.icon}</div>
               <div className="text-3xl font-bold gradient-text mb-2 font-arabic">{stat.number}</div>
               <div className="text-gray-600 dark:text-gray-400 font-medium font-arabic text-sm">{stat.label}</div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
         {/* Enhanced Values */}
         <div className="mb-16">
@@ -243,10 +245,16 @@ const About = () => {
             </p>
           </div>
           
-          <div ref={valuesRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.div
+            ref={valuesRef}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
             {values.map((value, index) => (
-              <div
+              <motion.div
                 key={index}
+                variants={valueVariants}
+                initial="hidden"
+                animate={valuesControls}
                 className="group text-center p-8 rounded-3xl bg-gray-50 dark:bg-gray-800/50 backdrop-blur-sm hover:bg-white dark:hover:bg-gray-800/70 transition-all duration-500 transform hover:scale-105 border border-gray-200 dark:border-gray-700/50 shadow-lg hover:shadow-2xl"
               >
                 <div className={`w-20 h-20 bg-gradient-to-r ${value.color} rounded-3xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-300 shadow-lg`}>
@@ -257,11 +265,16 @@ const About = () => {
                 
                 {/* Progress bar */}
                 <div className="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full mt-6 overflow-hidden">
-                  <div className={`h-full bg-gradient-to-r ${value.color} rounded-full transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left`}></div>
+                  <motion.div
+                    className={`h-full bg-gradient-to-r ${value.color} rounded-full`}
+                    initial={{ scaleX: 0 }}
+                    animate={{ scaleX: valuesInView ? 1 : 0 }}
+                    transition={{ duration: 0.5, ease: 'easeOut', originX: 0 }}
+                  ></motion.div>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
