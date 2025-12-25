@@ -107,7 +107,7 @@ const Footer = () => {
               <Heart className="w-4 h-4 text-red-500 fill-current" />
               <span> من</span>
               <span className='bracket'>{">"}</span> 
-              <a href="https://bakrhasan.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 hover:underline font-arabic ">  أبوبكر حسن </a>
+              <a href="https://yasuruha.netlify.app/" target="_blank" rel="noopener noreferrer" className="text-primary-600 dark:text-primary-400 hover:underline font-arabic "> يسِّرها </a>
               <span className='bracket'>{"<"}</span> 
             </p>
           </div>
